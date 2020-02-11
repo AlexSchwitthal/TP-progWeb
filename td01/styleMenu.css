@@ -13,6 +13,7 @@
 	position: sticky;
 	top: 0px;
 	text-align: center;
+
 }
 
 ul {
@@ -40,6 +41,12 @@ a {
 		text-align: center;
 }
 
+a:hover {
+	color:black;
+	border-width: 0px 0px 3px 0px;
+	border-style: solid;
+}
+
 .sous {
     display: none;
 		background-color : orange;
@@ -49,12 +56,12 @@ a {
 .sous li {
 	width: 100%;
 	text-align: left;
+	transition-property: background-color;
+	transition-duration: 1s;
 }
 
-a:hover {
-	color:black;
-	border-width: 0px 0px 3px 0px;
-	border-style: solid;
+.sous li:hover {
+	background-color: white;
 }
 
 ul li {
@@ -66,4 +73,100 @@ ul li {
 
 ul li:hover .sous {
 	display: block;
+}
+
+#testTransition {
+	width: 100px;
+	height: 100px;
+	bottom: 0px;
+	position: absolute;
+	background-color: white;
+  transition: background-color 2s, width 2s, height 2s, delay 5s;
+
+}
+
+#testTransition:hover {
+	transition: background-color 10s, width 10s, height 10s;
+	background-color: orange;
+	width: 200px;
+	height: 200px;
+}
+
+#testAnimation {
+	width: 100px;
+	height: 100px;
+	left: 100px;
+	bottom: 0px;
+		position: absolute;
+	animation-duration : 2s, 10s;
+	animation-iteration-count: infinite, infinite;
+	animation-direction: alternate, alternate;
+	animation-name: changementCouleur, changementTaille;
+}
+
+@keyframes changementCouleur {
+	from {
+		background-color: white;
+	}
+	to {
+		background-color: orange;
+	}
+}
+
+@keyframes changementTaille {
+	from {
+		width: 100px;
+		height: 100px;
+	}
+	to {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+#transformation1 {
+	width: 100px;
+	height: 100px;
+	background-color: green;
+	animation-duration : 2s, 2s;
+	animation-delay: 0s, 2s;
+	animation-fill-mode: forwards, forwards;
+	animation-name: translation, rotation;
+}
+
+@keyframes translation {
+	from {
+		transform : translate(0px);
+	}
+	to {
+		transform : translate(100px);
+	}
+}
+
+@keyframes rotation {
+	from {
+		transform : rotate(0deg);
+	}
+	to {
+		transform : rotate(45deg);
+	}
+}
+
+
+
+#transformation2 {
+	width: 100px;
+	height: 100px;
+	background-color: yellow;
+}
+
+#transformation3 {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+}
+
+#espace {
+	width: 100px;
+	height: 100px;
 }
