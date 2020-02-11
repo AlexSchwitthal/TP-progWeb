@@ -12,6 +12,7 @@
 	font-size:24px;
 	position: sticky;
 	top: 0px;
+	text-align: center;
 }
 
 ul {
@@ -36,6 +37,7 @@ a {
     padding-bottom: 10px;
     padding-top: 10px;
     box-sizing: border-box;
+		text-align: center;
 }
 
 .sous {
@@ -55,26 +57,12 @@ a:hover {
 	border-style: solid;
 }
 
-div {
-	height: 2000px;
-}
-
 ul li {
 	float: left;
 	background-color: orange;
 	width: 25%;
-	text-align: center;
-	position: relative;
 }
 
-ul li a {
-	text-align: center;
-	padding right: 10px;
-}
-
-ul ul li {
-	margin-right: auto;
-}
 
 ul li:hover .sous {
 	display: block;
