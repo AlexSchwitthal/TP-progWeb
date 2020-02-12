@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>JS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<form name="form" method="get">
+		DC1 : 
+	   <input type="number" id="DC1"><br />
+	    DC2 : 
+	   <input type="number" id="DC2"><br />
+	    DS :  
+	   <input type="number" id="DS"><br />
+	   <input type="submit" onClick="avg();return false;">
+   </form>
+    <div id="resultat"></div><br />
+    
+   	<form name="fibo" method="get">
+		N element : 
+	   <input type="number" id="n"><br />
+	   <input type="submit" onClick="document.getElementById('fibonacci').innerHTML = '';fibonacci(document.getElementById('n').value);return false;">
+   </form>
+   <div id="fibonacci"></div>
+   
+	<script>
+	
+		function avg() {
+			var total = parseInt(document.getElementById("DC1").value) + parseInt(document.getElementById("DC2").value) + parseInt(document.getElementById("DS").value);
+			var avg = total/3;
+			document.getElementById("resultat").innerHTML = "resultat : " + avg;
+		}
+		
+		function fibonacci(n) {
+			document.getElementById("fibonacci").innerHTML += "0;";
+			var a = 1; 
+			var b = 0;
+			var temp;
+
+			for(n; n >= 0; n--) {
+			    temp = a;
+			    a = a + b;
+			    b = temp;
+ 				document.getElementById("fibonacci").innerHTML += b + ";";
+			 }
+		}
+		
+	</script>
+</body>
+</html>
