@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>formation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table>
+     	<form name="form" method="get">
+  		  <tr>
+          <td> Nom : </td>
+          <td><input type="text" id="nom"> </td>
+        </tr>
+
+        <tr>
+          <td> Prenom : </td>
+          <td><input type="text" id="prenom"> </td>
+        </tr>
+
+        <tr>
+          <td> CIN : </td>
+          <td><input type="text" id="CIN"> </td>
+        </tr>
+
+        <tr>
+          <td> E-mail : </td>
+          <td><input type="text" id="e-mail"> </td>
+        </tr>
+
+        <tr>
+          <td> Niveau : </td>
+          <td>
+            <input type="radio" id="secondaire" name="niveau" value="secondaire" checked>
+            <label for="secondaire">secondaire</label>
+            <input type="radio" id="primaire" name="niveau" value="primaire">
+            <label for="primaire">primaire</label>
+            <input type="radio" id="autre" name="niveau" value="autre">
+            <label for="autre">autre</label>
+  	   <tr>
+
+       <tr>
+           <td> Modules et formations : </td>
+           <td>
+             <input type="checkbox" id="n°1" name="n°1" value="n°1" checked>
+             <label for="secondaire">n°1</label>
+             <input type="checkbox" id="n°2" name="n°2" value="n°2">
+             <label for="primaire">n°2</label>
+             <input type="checkbox" id="n°3" name="n°3" value="n°3">
+             <label for="autre">n°3</label>
+             <input type="checkbox" id="n°4" name="n°4" value="n°4">
+             <label for="autre">n°4</label>
+           </td>
+       <tr>
+          <td colspan="2">
+            <input type="submit" value="Annuler" onClick="erase();return false;">
+            <input type="submit" onClick="isValid();return false;">
+          </td>
+      </tr>
+     </form>
+  </table>
+   <div id="result"></div><br />
+	<script>
+
+		function erase() {
+      document.getElementById("nom").value = "";
+      document.getElementById("prenom").value = "";
+      document.getElementById("CIN").value = "";
+      document.getElementById("e-mail").value = "";
+
+      document.getElementById("secondaire").checked = true;
+
+      document.getElementById("n°1").checked = false;
+      document.getElementById("n°2").checked = false;
+      document.getElementById("n°3").checked = false;
+      document.getElementById("n°4").checked = false;
+		}
+
+		function isValid() {
+			var nom = document.getElementById("nom").value;
+			var CIN = document.getElementById("CIN").value;
+			var bool = valideCIN();
+			if(nom == "" || CIN == "" || bool == false) {
+				alert('veuillez remplir les deux champs');
+			}
+			else {
+				document.getElementById("result").innerHTML = nom + " " + CIN;
+			}
+		}
+
+		function valideCIN() {
+      /* TO DO
+			var CIN = document.getElementById("CIN").value;
+			if(CIN.length == 8 && typeof parseInt(CIN) == 'number') {
+				return true;
+			}
+			else {
+				return false;
+			}
+      */
+		}
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>calculatrice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<form name="form" method="get">
+		<table border=1>
+			<tr>
+				<td colspan="3"><input type="text" id="saisie" value="" readonly="readonly"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="sin" onClick="add('sin');return false;"></td>
+			  <td><input type="submit" value="cos" onClick="add('cos');return false;"></td>
+			  <td><input type="submit" value="log" onClick="add('log');return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="1" onClick="add(1);return false;"></td>
+			  <td><input type="submit" value="2" onClick="add(2);return false;"></td>
+			  <td><input type="submit" value="3" onClick="add(3);return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="4" onClick="add(4);return false;"></td>
+			  <td><input type="submit" value="5" onClick="add(5);return false;"></td>
+			  <td><input type="submit" value="6" onClick="add(6);return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="7" onClick="add(7);return false;"></td>
+			  <td><input type="submit" value="8" onClick="add(8);return false;"></td>
+			  <td><input type="submit" value="9" onClick="add(9);return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="(" onClick="add('(');return false;"></td>
+			  <td><input type="submit" value="0" onClick="add(0);return false;"></td>
+			  <td><input type="submit" value=")" onClick="add(')');return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="*" onClick="add('*');return false;"></td>
+			  <td><input type="submit" value="-" onClick="add('-');return false;"></td>
+			  <td><input type="submit" value="+" onClick="add('+');return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value="/" onClick="add('/');return false;"></td>
+			  <td><input type="submit" value="." onClick="add('.');return false;"></td>
+			  <td><input type="submit" value="C" onClick="remove();return false;"></td>
+			</tr>
+			<tr>
+			  <td><input type="submit" value=""></td>
+			  <td><input type="submit" value="=" onClick="result();return false;"></td>
+			  <td><input type="submit" value="E" onClick="erase();return false;"></td>
+			</tr>
+		</table>
+   </form>
+	<script>
+		let resultSend = false;
+
+		function erase() {
+			document.getElementById("saisie").value = "";
+		}
+
+		function add(element) {
+			if(resultSend == true) {
+				erase();
+				resultSend = false;
+			}
+			document.getElementById("saisie").value += element;
+		}
+
+		function remove() {
+			let str = document.getElementById("saisie").value;
+			if(str.charAt(str.length-1) == "n" || str.charAt(str.length-1) == "s" || str.charAt(str.length-1) == "g") {
+				document.getElementById("saisie").value = str.substring(0, str.length - 3);
+			}
+			else {
+				document.getElementById("saisie").value = str.substring(0, str.length - 1);
+			}
+		}
+
+		function result() {
+			let str = document.getElementById("saisie").value;
+			str = str.replace("sin", "Math.sin");
+			str = str.replace("cos", "Math.cos");
+			str = str.replace("log", "Math.log");
+			document.getElementById("saisie").value = eval(str);
+			resultSend = true;
+		}
+
+	</script>
+</body>
+</html>
