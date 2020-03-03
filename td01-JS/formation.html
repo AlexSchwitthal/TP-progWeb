@@ -76,28 +76,44 @@
       document.getElementById("n°4").checked = false;
 		}
 
-		function isValid() {
-			var nom = document.getElementById("nom").value;
-			var CIN = document.getElementById("CIN").value;
-			var bool = valideCIN();
-			if(nom == "" || CIN == "" || bool == false) {
-				alert('veuillez remplir les deux champs');
-			}
-			else {
-				document.getElementById("result").innerHTML = nom + " " + CIN;
-			}
+		function sumCheckBox() {
+      var total = 0;
+      if(document.getElementById("n°1").checked == true) {
+        total++;
+      }
+      if(document.getElementById("n°2").checked == true) {
+        total++;
+      }
+      if(document.getElementById("n°3").checked == true) {
+        total++;
+      }
+      if(document.getElementById("n°4").checked == true) {
+        total++;
+      }
+
+      if(total > 2) {
+        return false;
+      }
+      else {
+        return true;
+      }
 		}
 
-		function valideCIN() {
-      /* TO DO
+		function isValid() {
 			var CIN = document.getElementById("CIN").value;
-			if(CIN.length == 8 && typeof parseInt(CIN) == 'number') {
-				return true;
+      var nom = document.getElementById("nom").value;
+      var prenom = document.getElementById("prenom").value;
+      var email = document.getElementById("e-mail").value;
+
+			if(nom != "" && prenom != "" && email != ""
+        &&(CIN.length == 8 && typeof parseInt(CIN) == 'number')
+        && (email.includes("@"))
+        && sumCheckBox()) {
+				document.getElementById("result").innerHTML = "inscription achevée !";
 			}
 			else {
-				return false;
+				document.getElementById("result").innerHTML = "invalide !";
 			}
-      */
 		}
 
 	</script>
