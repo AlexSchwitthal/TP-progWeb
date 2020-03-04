@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>calculatrice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<center>
+		<h1 id="tour">Tour du joueur 1</h1>
+		<form name="form" method="get">
+			<table border=1>
+				<tr>
+				  <td><input type="submit" value="" id="11" onClick="addSymbole(11);return false;"></td>
+				  <td><input type="submit" value="" id="12" onClick="addSymbole(12);return false;"></td>
+				  <td><input type="submit" value="" id="13" onClick="addSymbole(13);return false;"></td>
+				</tr>
+				<tr>
+				  <td><input type="submit" value="" id="21" onClick="addSymbole(21);return false;"></td>
+				  <td><input type="submit" value="" id="22" onClick="addSymbole(22);return false;"></td>
+				  <td><input type="submit" value="" id="23" onClick="addSymbole(23);return false;"></td>
+				</tr>
+				<tr>
+				  <td><input type="submit" value="" id="31" onClick="addSymbole(31);return false;"></td>
+				  <td><input type="submit" value="" id="32" onClick="addSymbole(32);return false;"></td>
+				  <td><input type="submit" value="" id="33" onClick="addSymbole(33);return false;"></td>
+				</tr>
+			</table>
+	   </form>
+	</center>
+
+    <input type="submit" value="Reset" onClick="erase();return false;">
+	<script>
+		let nbElements = 0;
+
+		function erase() {
+			var td = document.getElementsByTagName("td");
+			for(var i = 0; i < td.length; i++) {
+				console.log(td[i].value);
+			}
+			console.log(td);
+		}
+
+		function addSymbole(click) {
+			if(document.getElementById(click).value == "") {
+				document.getElementById(click).value = symboleJoueur();
+				nbElements++;
+				
+				if(!estFini()) {
+					changementTour();
+				}
+				else {
+					changementTour();
+				}
+			}
+		}
+
+		function symboleJoueur() {
+			if(document.getElementById("tour").innerHTML.includes("1")) {
+				return "X";
+			}
+			else {
+				return "O";
+			}
+		}
+
+		function changementTour() {
+			if(document.getElementById("tour").innerHTML.includes("1")) {
+				document.getElementById("tour").innerHTML = "Tour du joueur 2";
+			}
+			else {
+				document.getElementById("tour").innerHTML = "Tour du joueur 1";
+			}
+		}
+
+		function estFini() {
+			for(var i = 1; i < 4; i++) {
+
+				/*if((document.getElementById(i + "1").value == document.getElementById(i + "2").value) && (document.getElementById(i + "1").value == document.getElementById(i + "3").value)) {
+					document.getElementById("tour").innerHTML = "FIN !";
+				}*/
+/*				if(document.getElementById(i + "1").value.equals(document.getElementById(i + "2").value)) {
+					document.getElementById("tour").innerHTML = "FIN !";
+				}
+*/
+
+			}
+			return false;
+		}
+
+	</script>
+</body>
+</html>
