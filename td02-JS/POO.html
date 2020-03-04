@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>POO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<script>
+    var t = new Team();
+    var m1 = new Member(1, "a", "a");
+    var m2 = new Member(2, "b", "b");
+
+    t.add(m1);
+    t.add(m2);
+
+    for(var element of t.list) {
+      element.ToString();
+    }
+
+
+    function Member(id, name, grade) {
+      this.id = id;
+      this.name = name;
+      this.grade = grade;
+
+      this.ToString = function() {
+        console.log("id: " + this.id + " ; name: " + this.name + " ; grade:" + this.grade);
+      }
+    }
+
+    function Team() {
+      this.list = [];
+
+      this.add = function(element) {
+        this.list.push(element);
+      }
+    }
+
+	</script>
+</body>
+</html>

@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>calculatrice</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" href="tictactoe.css">
 </head>
 <body>
 	<center>
@@ -42,7 +42,7 @@
 					changementTour();
 				}
 				else {
-					lock();	
+					lock();
 				}
 			}
 		}
@@ -68,30 +68,30 @@
 		function estFini() {
 			let victoire = false;
 			for(var i = 1; i < 4; i++) {
-				if(estEgal(document.getElementById(i + "1").value, document.getElementById(i + "2").value, document.getElementById(i + "3").value)) {
+				if(equals(document.getElementById(i + "1").value, document.getElementById(i + "2").value, document.getElementById(i + "3").value)) {
 					messageVictoire();
 					victoire = true;
 					return true;
 				}
-				if(estEgal(document.getElementById("1" + i).value, document.getElementById("2" + i).value, document.getElementById("3" + i).value)) {
+				if(equals(document.getElementById("1" + i).value, document.getElementById("2" + i).value, document.getElementById("3" + i).value)) {
 					messageVictoire();
 					victoire = true;
 					return true;
 				}
 			}
-			if(estEgal(document.getElementById("11").value, document.getElementById("22").value, document.getElementById("33").value)) {
+			if(equals(document.getElementById("11").value, document.getElementById("22").value, document.getElementById("33").value)) {
 				messageVictoire();
 				victoire = true;
 				return true;
 			}
-			if(estEgal(document.getElementById("13").value, document.getElementById("22").value, document.getElementById("31").value)) {
+			if(equals(document.getElementById("13").value, document.getElementById("22").value, document.getElementById("31").value)) {
 				messageVictoire();
 				victoire = true;
 				return true;
 			}
 			if(nbElements == 9 && victoire == false) {
 				document.getElementById("tour").innerHTML = "Egalité !";
-				return true;	
+				return true;
 			}
 			return false;
 		}
@@ -100,12 +100,12 @@
 			var input = document.getElementsByTagName("input");
 			for(var i = 0; i < input.length; i++) {
 				if(input[i].value == "") {
-					document.getElementsByTagName("input")[i].setAttribute("value", " ");
+					document.getElementsByTagName("input")[i].setAttribute('disabled', true);
 				}
 			}
 		}
 
-		function estEgal(elementUn, elementDeux, elementTrois) {
+		function equals(elementUn, elementDeux, elementTrois) {
 			if(elementUn != "" && elementDeux != "" && elementTrois != "") {
 				if((elementUn == elementDeux) && (elementUn == elementTrois)) {
 					return true;
@@ -116,10 +116,10 @@
 
 		function messageVictoire() {
 			if(document.getElementById("tour").innerHTML.includes("1")) {
-				document.getElementById("tour").innerHTML = "Victoire du joueur 1 !";	
+				document.getElementById("tour").innerHTML = "Victoire du joueur 1 !";
 			}
 			else {
-				document.getElementById("tour").innerHTML = "Victoire du joueur 2 !";	
+				document.getElementById("tour").innerHTML = "Victoire du joueur 2 !";
 			}
 		}
 
