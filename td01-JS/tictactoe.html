@@ -27,30 +27,22 @@
 				</tr>
 			</table>
 	   </form>
+	   <input type="submit" id="reset" value="Reset" onClick="erase();return false;">
 	</center>
 
-    <input type="submit" value="Reset" onClick="erase();return false;">
+
 	<script>
 		let nbElements = 0;
-
-		function erase() {
-			var td = document.getElementsByTagName("td");
-			for(var i = 0; i < td.length; i++) {
-				console.log(td[i].value);
-			}
-			console.log(td);
-		}
 
 		function addSymbole(click) {
 			if(document.getElementById(click).value == "") {
 				document.getElementById(click).value = symboleJoueur();
 				nbElements++;
-				
 				if(!estFini()) {
 					changementTour();
 				}
 				else {
-					changementTour();
+					lock();	
 				}
 			}
 		}
@@ -74,18 +66,72 @@
 		}
 
 		function estFini() {
+			let victoire = false;
 			for(var i = 1; i < 4; i++) {
-
-				/*if((document.getElementById(i + "1").value == document.getElementById(i + "2").value) && (document.getElementById(i + "1").value == document.getElementById(i + "3").value)) {
-					document.getElementById("tour").innerHTML = "FIN !";
-				}*/
-/*				if(document.getElementById(i + "1").value.equals(document.getElementById(i + "2").value)) {
-					document.getElementById("tour").innerHTML = "FIN !";
+				if(estEgal(document.getElementById(i + "1").value, document.getElementById(i + "2").value, document.getElementById(i + "3").value)) {
+					messageVictoire();
+					victoire = true;
+					return true;
 				}
-*/
-
+				if(estEgal(document.getElementById("1" + i).value, document.getElementById("2" + i).value, document.getElementById("3" + i).value)) {
+					messageVictoire();
+					victoire = true;
+					return true;
+				}
+			}
+			if(estEgal(document.getElementById("11").value, document.getElementById("22").value, document.getElementById("33").value)) {
+				messageVictoire();
+				victoire = true;
+				return true;
+			}
+			if(estEgal(document.getElementById("13").value, document.getElementById("22").value, document.getElementById("31").value)) {
+				messageVictoire();
+				victoire = true;
+				return true;
+			}
+			if(nbElements == 9 && victoire == false) {
+				document.getElementById("tour").innerHTML = "Egalité !";
+				return true;	
 			}
 			return false;
+		}
+
+		function lock() {
+			var input = document.getElementsByTagName("input");
+			for(var i = 0; i < input.length; i++) {
+				if(input[i].value == "") {
+					document.getElementsByTagName("input")[i].setAttribute("value", " ");
+				}
+			}
+		}
+
+		function estEgal(elementUn, elementDeux, elementTrois) {
+			if(elementUn != "" && elementDeux != "" && elementTrois != "") {
+				if((elementUn == elementDeux) && (elementUn == elementTrois)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function messageVictoire() {
+			if(document.getElementById("tour").innerHTML.includes("1")) {
+				document.getElementById("tour").innerHTML = "Victoire du joueur 1 !";	
+			}
+			else {
+				document.getElementById("tour").innerHTML = "Victoire du joueur 2 !";	
+			}
+		}
+
+		function erase() {
+			var input = document.getElementsByTagName("input");
+			for(var i = 0; i < input.length; i++) {
+				if(input[i].value != "Reset") {
+					input[i].value = "";
+				}
+			}
+			document.getElementById("tour").innerHTML = "Tour du joueur 1";
+			nbElements = 0;
 		}
 
 	</script>
