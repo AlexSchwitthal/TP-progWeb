@@ -8,40 +8,71 @@
 <body>
 	<script>
 
+    // LIGNE //
     function Ligne(longueur) {
         this.longueur = longueur;
     }
 
-    // Ligne.prototype.taille = function() {
-    //   return this.longueur;
-    // }
-
-    Ligne.prototype = {
-      taille: function() {
+    Ligne.prototype.taille = function() {
         return this.longueur;
-      }
     }
 
-    function Rectangle(longueur) {
+    function Rectangle(longueur, largeur) {
         Ligne.call(this, longueur);
+        this.largeur = largeur;
     }
 
+    // RECTANGLE //
     Rectangle.prototype = Object.create(Ligne.prototype);
+    Rectangle.prototype.constructor = Rectangle;
 
-    var a = new Ligne('10');
-    var b = new Ligne('20');
-    var c = new Rectangle('30');
+    Rectangle.prototype.aire = function() {
+        return this.longueur * this.largeur;
+    }
+
+
+    // Parallelepipede //
+    function Parallelepipede(longueur, largeur, hauteur) {
+      Rectangle.call(this, longueur, largeur);
+      this.hauteur = hauteur;
+    }
+
+    Parallelepipede.prototype = Object.create(Rectangle.prototype);
+    Parallelepipede.prototype.constructor = Parallelepipede;
+
+    Parallelepipede.prototype.volume = function() {
+      return (this.longueur * this.largeur * this.hauteur);
+    }
+
+    // GEO //
+    function Geo(longueur, largeur, hauteur) {
+      Parallelepipede.call(this, longueur, largeur, hauteur);
+    }
+
+    Geo.prototype = Object.create(Parallelepipede.prototype);
+    Geo.prototype.constructor = Geo;
+
+
+    var a = new Ligne(10);
+    var b = new Ligne(20);
+    var c = new Rectangle(30, 20);
+    var d = new Parallelepipede(30, 20, 10);
+    var e = new Geo(30, 20, 10);
 
     console.log(a.taille());
+
     console.log(b.taille());
+
     console.log(c.taille());
-    // class Rectangle extends Ligne {
-    //
-    //   constructor(longueur) {
-    //     Ligne.call(longueur);
-    //
-    //   }
-    // }
+    console.log(c.aire());
+
+    console.log(d.taille());
+    console.log(d.aire());
+    console.log(d.volume());
+
+    console.log(e.taille());
+    console.log(e.aire());
+    console.log(e.volume());
 
 	</script>
 </body>

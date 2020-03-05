@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<script>
+
+    // LIGNE //
+    function Vector(x, y) {
+        this.x = x;
+        this.y = y;
+        this.ZERO;
+        if(x != 0 && y != 0) {
+          this.ZERO = new Vector(0, 0);
+        }
+    }
+
+
+    Vector.prototype.ToString = function(v) {
+        return this.x + ";" + this.y;
+    }
+
+    Vector.prototype.add = function(v) {
+        return new Vector(this.x + v.x, this.y + v.y);
+    }
+
+    Vector.prototype.sub = function(v) {
+        return new Vector(this.x - v.x, this.y - v.y);
+    }
+
+    Vector.prototype.mult = function(k) {
+        return new Vector(this.x * k, this.y * k);
+    }
+
+    Vector.prototype.dot = function(v) {
+        return this.x * v.x + this.y * v.y;
+    }
+
+    Vector.prototype.norm = function() {
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
+    }
+
+    Vector.prototype.normalize = function() {
+        return new Vector((this.x * this.x) + (this.y * this.y));
+    }
+    var a = new Vector(10, 20);
+    var b = new Vector(20, 20);
+
+    var c = a.add(b);
+    var d = c.norm();
+    console.log(c.ToString());
+    console.log(d);
+
+	</script>
+</body>
+</html>
