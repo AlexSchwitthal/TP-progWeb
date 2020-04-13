@@ -3,47 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>exercice 3</title>
-  <script type="text/javascript" src="mandelbrot.js"></scrip
 </head>
 <body>
-  <canvas id="c1"></canvas>
-  <script>
-    // dégradé linéaire
-    let canvas = document.getElementById("c1");
-    canvas.width  = 400;
-    canvas.height = 150;
-
-    let ctx = canvas.getContext("2d");
-
-    var gradient = ctx.createLinearGradient(0, 0, 200, 0);
-    gradient.addColorStop(0.1, "purple");
-    gradient.addColorStop(0.3, "#F643B0");
-    gradient.addColorStop(0.6, "blue");
-    gradient.addColorStop(0.8, "green");
-    gradient.addColorStop(0.9, "yellow");
-    gradient.addColorStop(0.95, "orange");
-    gradient.addColorStop(1, "red");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(20, 20, 200, 100);
-
-    // translation
-    ctx.fillStyle = "red";
-    ctx.fillRect(250, 20, 50, 50);
-
-    ctx.translate(300, 20);
-
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(0, 0, 50, 50);
-
-    ctx.translate(0, 50);
-
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, 50, 50);
-
-    ctx.translate(-50, 0);
-
-    ctx.fillStyle = "green";
-    ctx.fillRect(0, 0, 50, 50);
-  </script>
+  <canvas id="cvn" style='background-color: #D0D0D0;'></canvas>
+  <div id="temps"></div>
+  <script type="text/javascript" src="mandelbrot.js"></script>
 </body>
 </html>
