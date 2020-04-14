@@ -43,7 +43,7 @@ const mandelbrot =  {
           // --- version avec des nuances de bleu pour une meilleure visibilité ---
           ctx.fillStyle = 'hsl(230, 100%, ' + (result * 100) + '%)';
 
-          ctx.fillRect(x,y, 1,1);
+          ctx.fillRect(x, y, 1, 1);
         }
       }
     }
