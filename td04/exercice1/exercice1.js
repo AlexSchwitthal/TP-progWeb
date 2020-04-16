@@ -10,9 +10,11 @@ var taille = 12;
 
 var startX;
 var startY;
+
 var storedPoints = [];
-var storedLines = [];
 var listPoints = [];
+var storedLines = [];
+var storedRects = [];
 
 canvas.addEventListener('mousemove', onMouseMove, false);
 canvas.addEventListener('mousedown', onMouseDown, false);
@@ -31,6 +33,16 @@ function onMouseUp(e) {
   var mouseX = parseInt(e.clientX - offsetX);
   var mouseY = parseInt(e.clientY - offsetY);
   switch(selected) {
+    case 'crayon':
+      storedPoints.push({
+        startX: startX,
+        startY: startY,
+        listPoints : listPoints.slice(0),
+        taille: taille
+      })
+      listPoints.length = 0;
+      break;
+
     case 'ligne' :
       storedLines.push({
           x1: startX,
@@ -41,14 +53,15 @@ function onMouseUp(e) {
       });
       break;
 
-    case 'crayon':
-      storedPoints.push({
-        startX: startX,
-        startY: startY,
-        listPoints : listPoints.slice(0),
+    case 'rectangle':
+      let rect = getRect(startX, startY, mouseX, mouseY);
+      storedRects.push({
+        leftX: rect.leftX,
+        topY: rect.topY,
+        rightX: rect.rightX,
+        bottomY: rect.bottomY,
         taille: taille
       })
-      listPoints.length = 0;
       break;
   }
   draw();
@@ -98,6 +111,15 @@ function onMouseMove(e) {
         ctx.strokeStyle = "black";
         ctx.stroke();
         break;
+
+      case 'rectangle':
+        draw();
+        let rect = getRect(startX, startY, x, y);
+        ctx.beginPath();
+        ctx.rect(rect.leftX, rect.topY, rect.rightX - rect.leftX, rect.bottomY - rect.topY);
+        ctx.lineWidth = taille;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
     }
   }
 }
@@ -121,6 +143,15 @@ function draw() {
 
     }
     ctx.lineWidth = storedPoints[i].taille;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+  }
+
+  for (var i = 0; i < storedRects.length; i++) {
+    ctx.beginPath();
+    ctx.rect(storedRects[i].leftX, storedRects[i].topY,
+      storedRects[i].rightX - storedRects[i].leftX, storedRects[i].bottomY - storedRects[i].topY);
+    ctx.lineWidth = storedRects[i].taille;
     ctx.strokeStyle = "black";
     ctx.stroke();
   }
@@ -154,4 +185,26 @@ function changeTo(element) {
     }
     selected = element;
   }
+}
+
+function getRect(startX, startY, currentX, currentY) {
+  rect = new Object();
+  if (startX < currentX) {
+    rect.leftX = startX;
+    rect.rightX = currentX;
+  }
+  else {
+    rect.leftX = currentX;
+    rect.rightX = startX;
+  }
+
+  if (startY < currentY) {
+    rect.topY = startY;
+    rect.bottomY = currentY;
+  }
+  else {
+    rect.topY = currentY;
+    rect.bottomY = startY;
+  }
+  return rect;
 }
