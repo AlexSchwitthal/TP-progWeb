@@ -10,6 +10,10 @@ var taille = 12;
 
 var startX;
 var startY;
+var lastX;
+var lastY;
+var movetoX;
+var moveToY;
 var isFirst = false;
 var storedPoints = [];
 var storedLines = [];
@@ -18,21 +22,7 @@ canvas.addEventListener('mousemove', onMouseMove, false);
 canvas.addEventListener('mousedown', onMouseDown, false);
 canvas.addEventListener('mouseup', onMouseUp, false);
 
-function changeTo(element) {
-  const buttons = document.querySelectorAll('button');
-  if (element != 'reset') {
-    for (const button of buttons) {
-      if (button.id == element) {
-        button.classList.remove('btn-default');
-        button.classList.add('btn-primary');
-      } else if (button.classList.contains('btn-primary')) {
-        button.classList.remove('btn-primary');
-        button.classList.add('btn-default');
-      }
-    }
-    selected = element;
-  }
-}
+
 
 function onMouseDown(e) {
   actif = true;
@@ -59,7 +49,8 @@ function onMouseUp(e) {
 }
 
 function onMouseMove(e) {
-  var x, y;
+  var x = parseInt(e.clientX - offsetX);
+  var y = parseInt(e.clientY - offsetY);
 
   // Get the mouse position.
   if (e.layerX >= 0) {
@@ -78,37 +69,37 @@ function onMouseMove(e) {
     ctx.beginPath();
     ctx.moveTo(x, y);
     isFirst = true;
+    moveToX = x;
+    moveToY = y;
   }
   else {
     switch (selected) {
       case 'crayon':
-
         ctx.lineTo(x, y);
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
+        if(isFirst) {
+          lastX = startX;
+          lastY = startY;
+        }
         storedPoints.push({
             x: x,
             y: y,
             taille: taille,
             isFirst: isFirst,
-            startX: startX,
-            startY: startY
+            moveToX: moveToX,
+            moveToY: moveToY
         });
         if(isFirst) {
           isFirst = false;
         }
+        lastX = x;
+        lastY = y;
         break;
 
-      // case 'gomme':
-      //   ctx.lineTo(x, y);
-      //   ctx.lineWidth = taille * 2;
-      //   ctx.strokeStyle = "white";
-      //   ctx.stroke();
-      //   break;
-
       case 'ligne':
-        //draw();
+        draw();
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(x, y);
@@ -118,18 +109,6 @@ function onMouseMove(e) {
         break;
     }
   }
-}
-
-function reset() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  storedLines.length = 0;
-  storedPoints.length = 0;
-}
-
-function changeSize(size) {
-  taille = size;
-  var affichage = document.getElementById("affichage");
-  affichage.innerHTML = size;
 }
 
 function draw() {
@@ -143,8 +122,13 @@ function draw() {
     ctx.stroke();
   }
 
+  var tempMoveToX = -1;
+  var tempMoveToY = -1;
   for (var i = 0; i < storedPoints.length; i++) {
-    ctx.beginPath();
+    if(tempMoveToX != storedPoints[i].moveToX) {
+      ctx.beginPath();
+      ctx.moveTo(storedPoints[i].moveToX, storedPoints[i].moveToY);
+    }
     if(storedPoints[i].isFirst == true) {
       ctx.moveTo(storedPoints[i].startX, storedPoints[i].startY);
     }
@@ -155,5 +139,35 @@ function draw() {
     ctx.lineWidth = storedPoints[i].taille;
     ctx.strokeStyle = "black";
     ctx.stroke();
+  }
+}
+
+// -- function secondaire -- //
+function reset() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  storedLines.length = 0;
+  storedPoints.length = 0;
+}
+
+function changeSize(size) {
+  taille = size;
+  var affichage = document.getElementById("affichage");
+  affichage.innerHTML = size;
+}
+
+function changeTo(element) {
+  const buttons = document.querySelectorAll('button');
+  if (element != 'reset') {
+    for (const button of buttons) {
+      if (button.id == element) {
+        button.classList.remove('btn-default');
+        button.classList.add('btn-primary');
+      }
+      else if (button.classList.contains('btn-primary')) {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-default');
+      }
+    }
+    selected = element;
   }
 }
