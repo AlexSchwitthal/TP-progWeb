@@ -10,8 +10,6 @@ var taille = 12;
 
 var startX;
 var startY;
-var lastX;
-var lastY;
 var movetoX;
 var moveToY;
 var isFirst = false;
@@ -79,10 +77,6 @@ function onMouseMove(e) {
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
-        if(isFirst) {
-          lastX = startX;
-          lastY = startY;
-        }
         storedPoints.push({
             x: x,
             y: y,
@@ -94,8 +88,6 @@ function onMouseMove(e) {
         if(isFirst) {
           isFirst = false;
         }
-        lastX = x;
-        lastY = y;
         break;
 
       case 'ligne':
@@ -124,16 +116,13 @@ function draw() {
 
   var tempMoveToX = -1;
   var tempMoveToY = -1;
+  console.log(storedPoints.length);
   for (var i = 0; i < storedPoints.length; i++) {
     if(tempMoveToX != storedPoints[i].moveToX) {
       ctx.beginPath();
       ctx.moveTo(storedPoints[i].moveToX, storedPoints[i].moveToY);
-    }
-    if(storedPoints[i].isFirst == true) {
-      ctx.moveTo(storedPoints[i].startX, storedPoints[i].startY);
-    }
-    else {
-      ctx.moveTo(storedPoints[i-1].x, storedPoints[i-1].y);
+      tempMoveToX = storedPoints[i].moveToX;
+      tempMoveToY = storedPoints[i].moveToY;
     }
     ctx.lineTo(storedPoints[i].x, storedPoints[i].y);
     ctx.lineWidth = storedPoints[i].taille;
