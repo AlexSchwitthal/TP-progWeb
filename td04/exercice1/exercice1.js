@@ -10,11 +10,9 @@ var taille = 12;
 
 var startX;
 var startY;
-var movetoX;
-var moveToY;
-var isFirst = false;
 var storedPoints = [];
 var storedLines = [];
+var listPoints = [];
 
 canvas.addEventListener('mousemove', onMouseMove, false);
 canvas.addEventListener('mousedown', onMouseDown, false);
@@ -42,6 +40,16 @@ function onMouseUp(e) {
           taille: taille
       });
       break;
+
+    case 'crayon':
+      storedPoints.push({
+        startX: startX,
+        startY: startY,
+        listPoints : listPoints.slice(0),
+        taille: taille
+      })
+      listPoints.length = 0;
+      break;
   }
   draw();
 }
@@ -66,9 +74,6 @@ function onMouseMove(e) {
   if(!actif) {
     ctx.beginPath();
     ctx.moveTo(x, y);
-    isFirst = true;
-    moveToX = x;
-    moveToY = y;
   }
   else {
     switch (selected) {
@@ -77,17 +82,11 @@ function onMouseMove(e) {
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
-        storedPoints.push({
-            x: x,
-            y: y,
-            taille: taille,
-            isFirst: isFirst,
-            moveToX: moveToX,
-            moveToY: moveToY
-        });
-        if(isFirst) {
-          isFirst = false;
-        }
+
+        listPoints.push({
+          x: x,
+          y: y
+        })
         break;
 
       case 'ligne':
@@ -114,17 +113,13 @@ function draw() {
     ctx.stroke();
   }
 
-  var tempMoveToX = -1;
-  var tempMoveToY = -1;
-  console.log(storedPoints.length);
   for (var i = 0; i < storedPoints.length; i++) {
-    if(tempMoveToX != storedPoints[i].moveToX) {
-      ctx.beginPath();
-      ctx.moveTo(storedPoints[i].moveToX, storedPoints[i].moveToY);
-      tempMoveToX = storedPoints[i].moveToX;
-      tempMoveToY = storedPoints[i].moveToY;
+    ctx.beginPath();
+    ctx.moveTo(storedPoints[i].startX, storedPoints[i].startY);
+    for(var j = 0; j < storedPoints[i].listPoints.length; j++) {
+      ctx.lineTo(storedPoints[i].listPoints[j].x, storedPoints[i].listPoints[j].y);
+
     }
-    ctx.lineTo(storedPoints[i].x, storedPoints[i].y);
     ctx.lineWidth = storedPoints[i].taille;
     ctx.strokeStyle = "black";
     ctx.stroke();
