@@ -15,6 +15,7 @@ var storedPoints = [];
 var listPoints = [];
 var storedLines = [];
 var storedRects = [];
+var storedCircles = [];
 
 canvas.addEventListener('mousemove', onMouseMove, false);
 canvas.addEventListener('mousedown', onMouseDown, false);
@@ -60,6 +61,16 @@ function onMouseUp(e) {
         topY: rect.topY,
         rightX: rect.rightX,
         bottomY: rect.bottomY,
+        taille: taille
+      })
+      break;
+
+    case 'cercle':
+      storedCircles.push({
+        startX: startX,
+        startY: startY,
+        x: mouseX,
+        y: mouseY,
         taille: taille
       })
       break;
@@ -120,6 +131,19 @@ function onMouseMove(e) {
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
+        break;
+
+      case 'cercle':
+        draw();
+        ctx.beginPath();
+        ctx.arc(startX, startY,
+          Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY))
+        * Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY)),
+        0, 2 * Math.PI);
+        ctx.lineWidth = taille;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        break;
     }
   }
 }
@@ -155,6 +179,17 @@ function draw() {
     ctx.strokeStyle = "black";
     ctx.stroke();
   }
+
+  for (var i = 0; i < storedCircles.length; i++) {
+    ctx.beginPath();
+    ctx.arc(storedCircles[i].startX, storedCircles[i].startY,
+      Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY))
+    * Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY)),
+    0, 2 * Math.PI);
+    ctx.lineWidth = storedCircles[i].taille;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+  }
 }
 
 // -- function secondaire -- //
@@ -162,6 +197,8 @@ function reset() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   storedLines.length = 0;
   storedPoints.length = 0;
+  storedRects.length = 0;
+  storedCircles.length = 0;
 }
 
 function changeSize(size) {
