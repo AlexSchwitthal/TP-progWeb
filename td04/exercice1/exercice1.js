@@ -70,10 +70,12 @@ function onMouseUp(e) {
 
     case 'cercle':
       storedCircles.push({
-        listCircles : listCircles.slice(0),
+        startX : startX,
+        startY : startY,
+        x : x,
+        y : y,
         taille: taille
       });
-      listCircles.length = 0;
       break;
   }
   draw();
@@ -145,12 +147,7 @@ function onMouseMove(e) {
             } else {
                 ctx.lineTo(xPos, yPos);
             }
-            listCircles.push({
-              x: xPos,
-              y: yPos
-            })
         }
-        console.log(listCircles.length);
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
@@ -209,35 +206,34 @@ function draw() {
     // ctx.strokeStyle = "black";
     // ctx.stroke();
     ctx.beginPath();
-    // console.log('lol');
-    // for (var j = 0 * Math.PI; j < 2 * Math.PI; j += 0.01 ) {
-    //     let circleX = storedCircles[i].startX -
-    //     ((storedCircles[i].x - storedCircles[i].startX) * Math.sin(j))
-    //     * Math.sin(0 * Math.PI)
-    //     + ((storedCircles[i].x - storedCircles[i].startX) * Math.cos(j))
-    //     * Math.cos((storedCircles[i].x - storedCircles[i].startX) * Math.PI);
-    //
-    //     let circleY = storedCircles[i].startY +
-    //     ((storedCircles[i].y - storedCircles[i].startY) * Math.cos(j))
-    //     * Math.sin(0 * Math.PI)
-    //     + ((storedCircles[i].y - storedCircles[i].startY) * Math.sin(j))
-    //     * Math.cos((storedCircles[i].y - storedCircles[i].startY) * Math.PI);
-    //
-    //     if (j == 0) {
-    //         ctx.moveTo(circleX, circleY);
-    //     }
-    //     else {
-    //         ctx.lineTo(circleX, circleY);
-    //     }
-    // }
-    for(var j = 0; j < storedCircles[i].listCircles.length; j++) {
-      if(j == 0) {
-        ctx.moveTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
-      }
-      else {
-        ctx.lineTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
-      }
+    for (var j = 0 * Math.PI; j < 2.01 * Math.PI; j += 0.01 ) {
+        let circleX = storedCircles[i].startX -
+        ((storedCircles[i].x - storedCircles[i].startX) * Math.sin(j))
+        * Math.sin(0 * Math.PI)
+        + ((storedCircles[i].x - storedCircles[i].startX) * Math.cos(j))
+        * Math.cos((storedCircles[i].x - storedCircles[i].startX) * Math.PI);
+
+        let circleY = storedCircles[i].startY +
+        ((storedCircles[i].y - storedCircles[i].startY) * Math.cos(j))
+        * Math.sin(0 * Math.PI)
+        + ((storedCircles[i].y - storedCircles[i].startY) * Math.sin(j))
+        * Math.cos((storedCircles[i].y - storedCircles[i].startY) * Math.PI);
+
+        if (j == 0) {
+            ctx.moveTo(circleX, circleY);
+        }
+        else {
+            ctx.lineTo(circleX, circleY);
+        }
     }
+    // for(var j = 0; j < storedCircles[i].listCircles.length; j++) {
+    //   if(j == 0) {
+    //     ctx.moveTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
+    //   }
+    //   else {
+    //     ctx.lineTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
+    //   }
+    // }
 
     ctx.lineWidth = taille;
     ctx.strokeStyle = "black";
@@ -278,7 +274,7 @@ function changeTo(element) {
 }
 
 function getRect(startX, startY, currentX, currentY) {
-  rect = new Object();
+  let rect = new Object();
   if (startX < currentX) {
     rect.leftX = startX;
     rect.rightX = currentX;
