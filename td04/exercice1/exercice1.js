@@ -10,12 +10,15 @@ var taille = 12;
 
 var startX;
 var startY;
+var circleX;
+var circleY;
 
 var storedPoints = [];
 var listPoints = [];
 var storedLines = [];
 var storedRects = [];
 var storedCircles = [];
+var listCircles = [];
 
 canvas.addEventListener('mousemove', onMouseMove, false);
 canvas.addEventListener('mousedown', onMouseDown, false);
@@ -67,12 +70,10 @@ function onMouseUp(e) {
 
     case 'cercle':
       storedCircles.push({
-        startX: startX,
-        startY: startY,
-        x: x,
-        y: y,
+        listCircles : listCircles.slice(0),
         taille: taille
-      })
+      });
+      listCircles.length = 0;
       break;
   }
   draw();
@@ -136,13 +137,31 @@ function onMouseMove(e) {
       case 'cercle':
         draw();
         ctx.beginPath();
-        ctx.arc(startX, startY,
-          Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY))
-        * Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY)),
-        0, 2 * Math.PI);
+        for (var i = 0 * Math.PI; i <= 2.01 * Math.PI; i += 0.01 ) {
+            let xPos = startX - ((x - startX) * Math.sin(i)) * Math.sin(0 * Math.PI) + ((x - startX) * Math.cos(i)) * Math.cos((x - startX) * Math.PI);
+            let yPos = startY + ((y - startY) * Math.cos(i)) * Math.sin(0 * Math.PI) + ((y - startY) * Math.sin(i)) * Math.cos((y - startY) * Math.PI);
+            if (i == 0) {
+                ctx.moveTo(xPos, yPos);
+            } else {
+                ctx.lineTo(xPos, yPos);
+            }
+            listCircles.push({
+              x: xPos,
+              y: yPos
+            })
+        }
+        console.log(listCircles.length);
         ctx.lineWidth = taille;
         ctx.strokeStyle = "black";
         ctx.stroke();
+        // ctx.beginPath();
+        // ctx.arc(startX, startY,
+        //   Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY))
+        // * Math.sqrt(Math.abs(x - startX) + Math.abs(y - startY)),
+        // 0, 2 * Math.PI);
+        // ctx.lineWidth = taille;
+        // ctx.strokeStyle = "black";
+        // ctx.stroke();
         break;
     }
   }
@@ -181,12 +200,46 @@ function draw() {
   }
 
   for (var i = 0; i < storedCircles.length; i++) {
+    //ctx.beginPath();
+    // ctx.arc(storedCircles[i].startX, storedCircles[i].startY,
+    //   Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY))
+    // * Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY)),
+    // 0, 2 * Math.PI);
+    // ctx.lineWidth = storedCircles[i].taille;
+    // ctx.strokeStyle = "black";
+    // ctx.stroke();
     ctx.beginPath();
-    ctx.arc(storedCircles[i].startX, storedCircles[i].startY,
-      Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY))
-    * Math.sqrt(Math.abs(storedCircles[i].x - storedCircles[i].startX) + Math.abs(storedCircles[i].y - storedCircles[i].startY)),
-    0, 2 * Math.PI);
-    ctx.lineWidth = storedCircles[i].taille;
+    // console.log('lol');
+    // for (var j = 0 * Math.PI; j < 2 * Math.PI; j += 0.01 ) {
+    //     let circleX = storedCircles[i].startX -
+    //     ((storedCircles[i].x - storedCircles[i].startX) * Math.sin(j))
+    //     * Math.sin(0 * Math.PI)
+    //     + ((storedCircles[i].x - storedCircles[i].startX) * Math.cos(j))
+    //     * Math.cos((storedCircles[i].x - storedCircles[i].startX) * Math.PI);
+    //
+    //     let circleY = storedCircles[i].startY +
+    //     ((storedCircles[i].y - storedCircles[i].startY) * Math.cos(j))
+    //     * Math.sin(0 * Math.PI)
+    //     + ((storedCircles[i].y - storedCircles[i].startY) * Math.sin(j))
+    //     * Math.cos((storedCircles[i].y - storedCircles[i].startY) * Math.PI);
+    //
+    //     if (j == 0) {
+    //         ctx.moveTo(circleX, circleY);
+    //     }
+    //     else {
+    //         ctx.lineTo(circleX, circleY);
+    //     }
+    // }
+    for(var j = 0; j < storedCircles[i].listCircles.length; j++) {
+      if(j == 0) {
+        ctx.moveTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
+      }
+      else {
+        ctx.lineTo(storedCircles[i].listCircles[j].x, storedCircles[i].listCircles[j].y);
+      }
+    }
+
+    ctx.lineWidth = taille;
     ctx.strokeStyle = "black";
     ctx.stroke();
   }
