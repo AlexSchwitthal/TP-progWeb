@@ -31,8 +31,8 @@ function onMouseDown(e) {
 
 function onMouseUp(e) {
   actif = false;
-  var mouseX = parseInt(e.clientX - offsetX);
-  var mouseY = parseInt(e.clientY - offsetY);
+  var x = parseInt(e.clientX - offsetX);
+  var y = parseInt(e.clientY - offsetY);
   switch(selected) {
     case 'crayon':
       storedPoints.push({
@@ -48,14 +48,14 @@ function onMouseUp(e) {
       storedLines.push({
           x1: startX,
           y1: startY,
-          x2: mouseX,
-          y2: mouseY,
+          x2: x,
+          y2: y,
           taille: taille
       });
       break;
 
     case 'rectangle':
-      let rect = getRect(startX, startY, mouseX, mouseY);
+      let rect = getRect(startX, startY, x, y);
       storedRects.push({
         leftX: rect.leftX,
         topY: rect.topY,
@@ -69,8 +69,8 @@ function onMouseUp(e) {
       storedCircles.push({
         startX: startX,
         startY: startY,
-        x: mouseX,
-        y: mouseY,
+        x: x,
+        y: y,
         taille: taille
       })
       break;
