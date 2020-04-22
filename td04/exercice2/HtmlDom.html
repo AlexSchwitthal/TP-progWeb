@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title> Manipulation du DOM en JavaScript </title>
+  <script type="text/javascript" src="lib.js"></script>
+</head>
+
+<body>
+  <h1 onClick="showContent(1)"> abc</h1>
+  <div id="title1" style="display:none">
+    <p>a</p>
+    <p>b</p>
+  </div>
+  <h1 onClick="showContent(2)"> def</h1>
+  <div id="title2" style="display:none">
+    <p>c</p>
+    <p>d</p>
+  </div>
+  <p>
+    <input type="submit" value="Masquer" onClick="hideAllDivs()" />
+  </p>
+  <p>
+    <input type="text" id="title" />
+    <input type="submit" value="Afficher" onClick="alertTitle()" />
+  </p>
+</body>
+
+</html>
