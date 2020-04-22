@@ -224,7 +224,7 @@ function draw() {
         }
     }
 
-    ctx.lineWidth = taille;
+    ctx.lineWidth = storedCircles[i].taille;
     ctx.strokeStyle = "black";
     ctx.stroke();
   }
@@ -246,7 +246,8 @@ function reset() {
 // appelé via la barre de changement de taille du crayon
 function changeSize(size) {
   taille = size;
-  document.getElementById("affichage").innerHTML = size;
+  let affichage = document.getElementById("affichage");
+  affichage.innerHTML = size;
 }
 
 // change l'élément de dessin selectionné
