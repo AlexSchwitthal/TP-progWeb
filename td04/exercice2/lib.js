@@ -18,6 +18,7 @@ function hideAllDivs() {
 // Ecrire une fonction alertTitle() permettant d'afficher (avec la fonction
 // JavaScript alert) le contenu du énième titre, défini par le champ de saisie
 // title.
+// -- fonction alertTitle() avec l'affichage du contenu de chaque
 function alertTitle() {
   var input = document.getElementById("title").value;
   var title = document.getElementById("title" + input);
@@ -37,6 +38,7 @@ function alertTitle() {
   }
 }
 
+// -- fonction alertTitle() avec l'affichage direct du contenu de la div -- //
 // function alertTitle() {
 //   var input = document.getElementById("title").value;
 //   var title = document.getElementById("title" + input);
@@ -75,7 +77,6 @@ function defineTitle() {
   var input = document.getElementById("titleDefine").value;
   var title = document.getElementById("title" + input);
 
-  console.log(input);
   if(title == null ) {
     alert("ce titre n'existe pas !");
   }
