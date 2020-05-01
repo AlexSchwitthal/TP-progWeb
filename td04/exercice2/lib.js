@@ -21,25 +21,70 @@ function hideAllDivs() {
 function alertTitle() {
   var input = document.getElementById("title").value;
   var title = document.getElementById("title" + input);
-  if(title == null | title.innerHTML == "") {
+  if(title == null ) {
     alert("ce titre n'existe pas !");
   }
+  else if(title.innerHTML == "") {
+    alert("ce titre ne contient rien !");
+  }
   else {
-    alert(title.innerHTML);
+    var text = '';
+    var allParagraphs = document.querySelectorAll("#title" + input + " > p");
+    for(var p of allParagraphs) {
+      text += p.innerHTML + "\n";
+    }
+    alert(text);
   }
 }
+
+// function alertTitle() {
+//   var input = document.getElementById("title").value;
+//   var title = document.getElementById("title" + input);
+//   if(title == null ) {
+//     alert("ce titre n'existe pas !");
+//   }
+//   else if(title.innerHTML == "") {
+//     alert("ce titre ne contient rien !");
+//   }
+//   else {
+//     alert(title.innerHTML);
+//   }
+// }
 
 // Ecrire la fonction deleteTitle() permettant d'effacer le contenu du titre
 // défini par le champ title, autrement dit de supprimer le noeud fils de type
 // texte.
 function deleteTitle() {
-
+  var input = document.getElementById("titleDelete").value;
+  var title = document.getElementById("title" + input);
+  if(title == null ) {
+    alert("ce titre n'existe pas !");
+  }
+  else {
+    while (title.firstChild) {
+      title.removeChild(title.lastChild);
+    }
+  }
 }
 
-// Ecrire une fonction deneTitle() qui permet d'aecter le contenu du titre
+// Ecrire une fonction defineTitle() qui permet d'affecter le contenu du titre
 // défini par le champ title avec la valeur "Nouveau titre". Il faut commencer
-// par tester que le titre a ou non deja une valeur (nud texte) avant l'ajout,
-// an de la supprimer si besoin.
+// par tester que le titre a ou non déjà une valeur (noeud texte) avant l'ajout,
+// afin de la supprimer si besoin.
 function defineTitle() {
+  var input = document.getElementById("titleDefine").value;
+  var title = document.getElementById("title" + input);
 
+  console.log(input);
+  if(title == null ) {
+    alert("ce titre n'existe pas !");
+  }
+  else {
+    while (title.firstChild) {
+      title.removeChild(title.lastChild);
+    }
+    var p = document.createElement("p");
+    p.innerHTML = "Nouveau titre";
+    title.appendChild(p);
+  }
 }
