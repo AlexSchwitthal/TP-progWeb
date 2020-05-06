@@ -12,6 +12,7 @@ var offsetY = 20;
 
 var selected = 'crayon'; // element de dessin selectionné
 var taille = 12; // taille en px du dessin
+var couleur = "black"; // couleur du crayon
 var actif = false; // actif est true si le clic souris est enfoncé, false sinon
 
 
@@ -58,7 +59,8 @@ function onMouseUp(e) {
         startX: startX,
         startY: startY,
         listPoints : listPoints.slice(0),
-        taille: taille
+        taille: taille,
+        couleur: couleur
       })
       listPoints.length = 0;
       break;
@@ -69,7 +71,8 @@ function onMouseUp(e) {
           y1: startY,
           x2: x,
           y2: y,
-          taille: taille
+          taille: taille,
+          couleur: couleur
       });
       break;
 
@@ -80,7 +83,8 @@ function onMouseUp(e) {
         topY: rect.topY,
         rightX: rect.rightX,
         bottomY: rect.bottomY,
-        taille: taille
+        taille: taille,
+        couleur: couleur
       })
       break;
 
@@ -90,7 +94,8 @@ function onMouseUp(e) {
         startY : startY,
         x : x,
         y : y,
-        taille: taille
+        taille: taille,
+        couleur: couleur
       });
       break;
   }
@@ -113,7 +118,7 @@ function onMouseMove(e) {
       case 'crayon':
         ctx.lineTo(x, y);
         ctx.lineWidth = taille;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = couleur;
         ctx.stroke();
 
         listPoints.push({
@@ -128,7 +133,7 @@ function onMouseMove(e) {
         ctx.moveTo(startX, startY);
         ctx.lineTo(x, y);
         ctx.lineWidth = taille;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = couleur;
         ctx.stroke();
         break;
 
@@ -138,7 +143,7 @@ function onMouseMove(e) {
         ctx.beginPath();
         ctx.rect(rect.leftX, rect.topY, rect.rightX - rect.leftX, rect.bottomY - rect.topY);
         ctx.lineWidth = taille;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = couleur;
         ctx.stroke();
         break;
 
@@ -155,7 +160,7 @@ function onMouseMove(e) {
             }
         }
         ctx.lineWidth = taille;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = couleur;
         ctx.stroke();
         break;
     }
@@ -176,7 +181,7 @@ function draw() {
 
     }
     ctx.lineWidth = storedPoints[i].taille;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = storedPoints[i].couleur;
     ctx.stroke();
   }
 
@@ -186,7 +191,7 @@ function draw() {
     ctx.moveTo(storedLines[i].x1, storedLines[i].y1);
     ctx.lineTo(storedLines[i].x2, storedLines[i].y2);
     ctx.lineWidth = storedLines[i].taille;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = storedLines[i].couleur;
     ctx.stroke();
   }
 
@@ -196,7 +201,7 @@ function draw() {
     ctx.rect(storedRects[i].leftX, storedRects[i].topY,
       storedRects[i].rightX - storedRects[i].leftX, storedRects[i].bottomY - storedRects[i].topY);
     ctx.lineWidth = storedRects[i].taille;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = storedRects[i].couleur;
     ctx.stroke();
   }
 
@@ -225,7 +230,7 @@ function draw() {
     }
 
     ctx.lineWidth = storedCircles[i].taille;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = storedCircles[i].couleur;
     ctx.stroke();
   }
 }
@@ -248,6 +253,44 @@ function changeSize(size) {
   taille = size;
   let affichage = document.getElementById("affichage");
   affichage.innerHTML = size;
+}
+
+// change la couleur du crayon
+// appelé via le click sur l'une des couleurs
+function changeColor(color) {
+  couleur = color;
+  let affichageCouleur = document.getElementById("affichageCouleur");
+  affichageCouleur.innerHTML = translate(color);
+}
+
+// traduit le nom de la couleur transmis et la retourne en français
+function translate(color) {
+  switch(color) {
+    case 'black':
+      return 'Noir';
+      break;
+    case 'red':
+      return 'Rouge';
+      break;
+    case 'blue':
+      return 'Bleu';
+      break;
+    case 'green':
+      return 'Vert';
+      break;
+    case 'yellow':
+      return 'Jaune';
+      break;
+    case 'grey':
+      return 'Gris';
+      break;
+    case 'purple':
+      return 'Violet';
+      break;
+    default:
+      return 'erreur';
+      break;
+  }
 }
 
 // change l'élément de dessin selectionné
